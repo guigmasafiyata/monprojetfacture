@@ -2,24 +2,45 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
     <h:head>
-        <meta charset="UTF-8"/>
         <title>Formulaire de connexion</title>
     </h:head>
     <h:body>
-            <h:form>
-                <h:messages styleClass="errorBlock" /><br/>
 
-    Login: 
-    <h:inputText id="login" value="#{loginBean.login}" required="true" />
-    <br/>
+        <f:view>
+            <div class="card">
+                <h:form id="form">
+                    <h:panelGrid columns="2" cellpadding="7" styleClass="mb-3">
+                        <p:growl id="growl" showDetail="true"/><br/>
 
-    Password:
-    <h:inputSecret id="password" value="#{loginBean.password}" required="true" />
-    <br/><br/>
+                        <p:outputLabel for="login" value="Login:"/>
+                        <p:inputText  id="login" required="true"
+                                      requiredMessage="La saisie du login est obligatoire !" 
+                                      validatorMessage="Le login doit correspondre à un email">
+                            <f:validateRegex pattern="^[\w.+-]+@[\w.+-]+\.[a-z]{2,}$" />
+                        </p:inputText>
+                        <p:message for="login" display="tooltip" />
+                        <br/>
 
-    <h:commandButton action="#{loginBean.returnAction}" value="Connect" />
-               
-            </h:form>
+                        <p:outputLabel for="password" value="Password:"/>
+                        <p:password id="password" required="true" 
+                                    requiredMessage="La saisie du mot de passe est obligatoire !"
+                                    validatorMessage="Votre mot de passe doit contenir entre 3 à 8 caractères" >
+                            <f:validateLength minimum="3" maximum="8" />
+                        </p:password> 
+
+                        <p:message for="password" display="tooltip" />
+                        <br/><br/>
+
+
+                        <p:commandButton ajax="false" update="@form" action="#{loginBean.returnAction}" value="boutton"  />
+                    </h:panelGrid>
+
+                </h:form>
+            </div>
+        </f:view>
     </h:body>
 </html>
