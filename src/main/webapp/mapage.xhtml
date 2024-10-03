@@ -18,7 +18,13 @@
                 <h:form id="form">
                     <h:panelGrid columns="2" cellpadding="7" styleClass="mb-3">
                         <p:growl id="growl" showDetail="true"/><br/>
-
+                        
+                        <p:outputLabel for="utilisateur" value="Utilisateur:"/>
+                        <p:inputText id="utilisateur" required="true" 
+                                     requiredMessage="La saisie de l'utilisateur est obligatoire !" />
+                        <p:message for="utilisateur" display="tooltip" />
+                        <br/><br/>
+                        
                         <p:outputLabel for="login" value="Login:"/>
                         <p:inputText  id="login" required="true"
                                       requiredMessage="La saisie du login est obligatoire !" 
