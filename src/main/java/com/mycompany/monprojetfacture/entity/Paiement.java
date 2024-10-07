@@ -10,7 +10,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinColumns;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
@@ -47,11 +46,9 @@ public class Paiement implements Serializable {
     @Column(name = "date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
-    @JoinColumns({
-        @JoinColumn(name = "idfacture", referencedColumnName = "idfacture"),
-        @JoinColumn(name = "nofacturedef", referencedColumnName = "nofacturedef")})
+    @JoinColumn(name = "idfacture", referencedColumnName = "idfacture")
     @ManyToOne
-    private Facturedefinitive facturedefinitive;
+    private Facturedefinitive idfacture;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idpaiement")
     private Collection<Facturedefinitive> facturedefinitiveCollection;
 
@@ -78,12 +75,12 @@ public class Paiement implements Serializable {
         this.date = date;
     }
 
-    public Facturedefinitive getFacturedefinitive() {
-        return facturedefinitive;
+    public Facturedefinitive getIdfacture() {
+        return idfacture;
     }
 
-    public void setFacturedefinitive(Facturedefinitive facturedefinitive) {
-        this.facturedefinitive = facturedefinitive;
+    public void setIdfacture(Facturedefinitive idfacture) {
+        this.idfacture = idfacture;
     }
 
     @XmlTransient

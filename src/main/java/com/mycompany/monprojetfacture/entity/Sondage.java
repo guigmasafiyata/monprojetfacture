@@ -8,8 +8,6 @@ import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
@@ -30,6 +28,7 @@ import java.util.Date;
 @NamedQueries({
     @NamedQuery(name = "Sondage.findAll", query = "SELECT s FROM Sondage s"),
     @NamedQuery(name = "Sondage.findByIdsondage", query = "SELECT s FROM Sondage s WHERE s.idsondage = :idsondage"),
+    @NamedQuery(name = "Sondage.findByIdactivite", query = "SELECT s FROM Sondage s WHERE s.idactivite = :idactivite"),
     @NamedQuery(name = "Sondage.findByDatedebut", query = "SELECT s FROM Sondage s WHERE s.datedebut = :datedebut"),
     @NamedQuery(name = "Sondage.findByDatefin", query = "SELECT s FROM Sondage s WHERE s.datefin = :datefin")})
 public class Sondage implements Serializable {
@@ -40,15 +39,16 @@ public class Sondage implements Serializable {
     @NotNull
     @Column(name = "idsondage")
     private Integer idsondage;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "idactivite")
+    private int idactivite;
     @Column(name = "datedebut")
     @Temporal(TemporalType.TIMESTAMP)
     private Date datedebut;
     @Column(name = "datefin")
     @Temporal(TemporalType.TIMESTAMP)
     private Date datefin;
-    @JoinColumn(name = "idactivite", referencedColumnName = "idactivite")
-    @ManyToOne(optional = false)
-    private Activite idactivite;
 
     public Sondage() {
     }
@@ -57,12 +57,25 @@ public class Sondage implements Serializable {
         this.idsondage = idsondage;
     }
 
+    public Sondage(Integer idsondage, int idactivite) {
+        this.idsondage = idsondage;
+        this.idactivite = idactivite;
+    }
+
     public Integer getIdsondage() {
         return idsondage;
     }
 
     public void setIdsondage(Integer idsondage) {
         this.idsondage = idsondage;
+    }
+
+    public int getIdactivite() {
+        return idactivite;
+    }
+
+    public void setIdactivite(int idactivite) {
+        this.idactivite = idactivite;
     }
 
     public Date getDatedebut() {
@@ -79,14 +92,6 @@ public class Sondage implements Serializable {
 
     public void setDatefin(Date datefin) {
         this.datefin = datefin;
-    }
-
-    public Activite getIdactivite() {
-        return idactivite;
-    }
-
-    public void setIdactivite(Activite idactivite) {
-        this.idactivite = idactivite;
     }
 
     @Override

@@ -5,8 +5,10 @@
 package com.mycompany.monprojetfacture.jsf;
 
 import com.mycompany.monprojetfacture.entity.Client;
-import com.mycompany.monprojetfacture.service.MapageManager;
+import com.mycompany.monprojetfacture.service.ClientManager;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.faces.view.ViewScoped;
+import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import java.io.Serializable;
 import java.util.List;
@@ -15,21 +17,25 @@ import java.util.List;
  *
  * @author GUIGMA Safiyata
  */
-@Named(value = "ClientBean")
-@ViewScoped
+@Named(value = "clientBean")
+@RequestScoped
 public class ClientBean implements Serializable {
-    private List<Client> pagesuivante;
+    private List<Client> clientList;
     
+    @Inject
+    private ClientManager clientManager;
+
+    public List<Client> getClientList() {
+        clientList = clientManager.getAllClients();
+        return clientList;
+    }
     /** 
    * Retourne la liste des clients pour affichage dans une DataTable.
      * @return 
    */  
-  public List<Client> getClients() {
-    if (pagesuivante == null) {
-      pagesuivante = MapageManager.getAllClients();
-    }
-    return pagesuivante;
-  }  
+    
+    
+  
 }
     
     

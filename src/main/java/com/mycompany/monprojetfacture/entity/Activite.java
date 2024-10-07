@@ -5,20 +5,16 @@
 package com.mycompany.monprojetfacture.entity;
 
 import jakarta.persistence.Basic;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import jakarta.xml.bind.annotation.XmlRootElement;
-import jakarta.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
-import java.util.Collection;
 
 /**
  *
@@ -42,8 +38,6 @@ public class Activite implements Serializable {
     @Size(max = 254)
     @Column(name = "description")
     private String description;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idactivite")
-    private Collection<Sondage> sondageCollection;
 
     public Activite() {
     }
@@ -66,15 +60,6 @@ public class Activite implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    @XmlTransient
-    public Collection<Sondage> getSondageCollection() {
-        return sondageCollection;
-    }
-
-    public void setSondageCollection(Collection<Sondage> sondageCollection) {
-        this.sondageCollection = sondageCollection;
     }
 
     @Override

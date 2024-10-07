@@ -5,21 +5,17 @@
 package com.mycompany.monprojetfacture.entity;
 
 import jakarta.persistence.Basic;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotNull;
 import jakarta.xml.bind.annotation.XmlRootElement;
-import jakarta.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 
 /**
@@ -44,8 +40,6 @@ public class Livraison implements Serializable {
     @Column(name = "dateLivraison")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateLivraison;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "noliv")
-    private Collection<Produit> produitCollection;
 
     public Livraison() {
     }
@@ -68,15 +62,6 @@ public class Livraison implements Serializable {
 
     public void setDateLivraison(Date dateLivraison) {
         this.dateLivraison = dateLivraison;
-    }
-
-    @XmlTransient
-    public Collection<Produit> getProduitCollection() {
-        return produitCollection;
-    }
-
-    public void setProduitCollection(Collection<Produit> produitCollection) {
-        this.produitCollection = produitCollection;
     }
 
     @Override

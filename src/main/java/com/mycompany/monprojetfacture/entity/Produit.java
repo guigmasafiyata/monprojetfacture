@@ -8,18 +8,13 @@ import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import jakarta.xml.bind.annotation.XmlRootElement;
-import jakarta.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
-import java.util.Collection;
 
 /**
  *
@@ -31,6 +26,7 @@ import java.util.Collection;
 @NamedQueries({
     @NamedQuery(name = "Produit.findAll", query = "SELECT p FROM Produit p"),
     @NamedQuery(name = "Produit.findByNopro", query = "SELECT p FROM Produit p WHERE p.nopro = :nopro"),
+    @NamedQuery(name = "Produit.findByNoliv", query = "SELECT p FROM Produit p WHERE p.noliv = :noliv"),
     @NamedQuery(name = "Produit.findByNom", query = "SELECT p FROM Produit p WHERE p.nom = :nom"),
     @NamedQuery(name = "Produit.findByDesignation", query = "SELECT p FROM Produit p WHERE p.designation = :designation")})
 public class Produit implements Serializable {
@@ -41,17 +37,16 @@ public class Produit implements Serializable {
     @NotNull
     @Column(name = "nopro")
     private Integer nopro;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "noliv")
+    private int noliv;
     @Size(max = 254)
     @Column(name = "nom")
     private String nom;
     @Size(max = 254)
     @Column(name = "designation")
     private String designation;
-    @ManyToMany(mappedBy = "produitCollection")
-    private Collection<Commande> commandeCollection;
-    @JoinColumn(name = "noliv", referencedColumnName = "noliv")
-    @ManyToOne(optional = false)
-    private Livraison noliv;
 
     public Produit() {
     }
@@ -60,12 +55,25 @@ public class Produit implements Serializable {
         this.nopro = nopro;
     }
 
+    public Produit(Integer nopro, int noliv) {
+        this.nopro = nopro;
+        this.noliv = noliv;
+    }
+
     public Integer getNopro() {
         return nopro;
     }
 
     public void setNopro(Integer nopro) {
         this.nopro = nopro;
+    }
+
+    public int getNoliv() {
+        return noliv;
+    }
+
+    public void setNoliv(int noliv) {
+        this.noliv = noliv;
     }
 
     public String getNom() {
@@ -82,23 +90,6 @@ public class Produit implements Serializable {
 
     public void setDesignation(String designation) {
         this.designation = designation;
-    }
-
-    @XmlTransient
-    public Collection<Commande> getCommandeCollection() {
-        return commandeCollection;
-    }
-
-    public void setCommandeCollection(Collection<Commande> commandeCollection) {
-        this.commandeCollection = commandeCollection;
-    }
-
-    public Livraison getNoliv() {
-        return noliv;
-    }
-
-    public void setNoliv(Livraison noliv) {
-        this.noliv = noliv;
     }
 
     @Override

@@ -11,14 +11,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import jakarta.xml.bind.annotation.XmlRootElement;
-import jakarta.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
-import java.util.Collection;
 
 /**
  *
@@ -48,10 +46,10 @@ public class Facture implements Serializable {
     @Size(max = 254)
     @Column(name = "termepaiement")
     private String termepaiement;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "facture")
-    private Collection<Facturedefinitive> facturedefinitiveCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "facture")
-    private Collection<Factureproforma> factureproformaCollection;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "facture")
+    private Facturedefinitive facturedefinitive;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "facture")
+    private Factureproforma factureproforma;
 
     public Facture() {
     }
@@ -92,22 +90,20 @@ public class Facture implements Serializable {
         this.termepaiement = termepaiement;
     }
 
-    @XmlTransient
-    public Collection<Facturedefinitive> getFacturedefinitiveCollection() {
-        return facturedefinitiveCollection;
+    public Facturedefinitive getFacturedefinitive() {
+        return facturedefinitive;
     }
 
-    public void setFacturedefinitiveCollection(Collection<Facturedefinitive> facturedefinitiveCollection) {
-        this.facturedefinitiveCollection = facturedefinitiveCollection;
+    public void setFacturedefinitive(Facturedefinitive facturedefinitive) {
+        this.facturedefinitive = facturedefinitive;
     }
 
-    @XmlTransient
-    public Collection<Factureproforma> getFactureproformaCollection() {
-        return factureproformaCollection;
+    public Factureproforma getFactureproforma() {
+        return factureproforma;
     }
 
-    public void setFactureproformaCollection(Collection<Factureproforma> factureproformaCollection) {
-        this.factureproformaCollection = factureproformaCollection;
+    public void setFactureproforma(Factureproforma factureproforma) {
+        this.factureproforma = factureproforma;
     }
 
     @Override

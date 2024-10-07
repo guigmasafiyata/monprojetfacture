@@ -9,8 +9,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
@@ -20,9 +18,7 @@ import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import jakarta.xml.bind.annotation.XmlRootElement;
-import jakarta.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 
 /**
@@ -51,11 +47,6 @@ public class Commande implements Serializable {
     @Column(name = "dateComnde")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateComnde;
-    @JoinTable(name = "association23", joinColumns = {
-        @JoinColumn(name = "numcomnde", referencedColumnName = "numcomnde")}, inverseJoinColumns = {
-        @JoinColumn(name = "nopro", referencedColumnName = "nopro")})
-    @ManyToMany
-    private Collection<Produit> produitCollection;
     @JoinColumn(name = "numcli", referencedColumnName = "numcli")
     @ManyToOne(optional = false)
     private Client numcli;
@@ -89,15 +80,6 @@ public class Commande implements Serializable {
 
     public void setDateComnde(Date dateComnde) {
         this.dateComnde = dateComnde;
-    }
-
-    @XmlTransient
-    public Collection<Produit> getProduitCollection() {
-        return produitCollection;
-    }
-
-    public void setProduitCollection(Collection<Produit> produitCollection) {
-        this.produitCollection = produitCollection;
     }
 
     public Client getNumcli() {

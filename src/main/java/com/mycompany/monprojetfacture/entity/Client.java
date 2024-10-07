@@ -10,7 +10,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinColumns;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
@@ -51,15 +50,19 @@ public class Client implements Serializable {
     private String prenom;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "numcli")
     private Collection<Commande> commandeCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "numcli")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "clinumcli")
     private Collection<Facturedefinitive> facturedefinitiveCollection;
+    @OneToMany(mappedBy = "clinumcli2")
+    private Collection<Facturedefinitive> facturedefinitiveCollection1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "numcli")
+    private Collection<Facturedefinitive> facturedefinitiveCollection2;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "numcli")
     private Collection<Factureproforma> factureproformaCollection;
-    @JoinColumns({
-        @JoinColumn(name = "idfacture", referencedColumnName = "idfacture"),
-        @JoinColumn(name = "nofacturedef", referencedColumnName = "nofacturedef")})
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "clinumcli")
+    private Collection<Factureproforma> factureproformaCollection1;
+    @JoinColumn(name = "idfacture", referencedColumnName = "idfacture")
     @ManyToOne
-    private Facturedefinitive facturedefinitive;
+    private Facturedefinitive idfacture;
 
     public Client() {
     }
@@ -111,6 +114,24 @@ public class Client implements Serializable {
     }
 
     @XmlTransient
+    public Collection<Facturedefinitive> getFacturedefinitiveCollection1() {
+        return facturedefinitiveCollection1;
+    }
+
+    public void setFacturedefinitiveCollection1(Collection<Facturedefinitive> facturedefinitiveCollection1) {
+        this.facturedefinitiveCollection1 = facturedefinitiveCollection1;
+    }
+
+    @XmlTransient
+    public Collection<Facturedefinitive> getFacturedefinitiveCollection2() {
+        return facturedefinitiveCollection2;
+    }
+
+    public void setFacturedefinitiveCollection2(Collection<Facturedefinitive> facturedefinitiveCollection2) {
+        this.facturedefinitiveCollection2 = facturedefinitiveCollection2;
+    }
+
+    @XmlTransient
     public Collection<Factureproforma> getFactureproformaCollection() {
         return factureproformaCollection;
     }
@@ -119,12 +140,21 @@ public class Client implements Serializable {
         this.factureproformaCollection = factureproformaCollection;
     }
 
-    public Facturedefinitive getFacturedefinitive() {
-        return facturedefinitive;
+    @XmlTransient
+    public Collection<Factureproforma> getFactureproformaCollection1() {
+        return factureproformaCollection1;
     }
 
-    public void setFacturedefinitive(Facturedefinitive facturedefinitive) {
-        this.facturedefinitive = facturedefinitive;
+    public void setFactureproformaCollection1(Collection<Factureproforma> factureproformaCollection1) {
+        this.factureproformaCollection1 = factureproformaCollection1;
+    }
+
+    public Facturedefinitive getIdfacture() {
+        return idfacture;
+    }
+
+    public void setIdfacture(Facturedefinitive idfacture) {
+        this.idfacture = idfacture;
     }
 
     @Override

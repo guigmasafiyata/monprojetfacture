@@ -6,13 +6,13 @@ package com.mycompany.monprojetfacture.entity;
 
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
-import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinColumns;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -28,26 +28,23 @@ import java.io.Serializable;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Factureproforma.findAll", query = "SELECT f FROM Factureproforma f"),
-    @NamedQuery(name = "Factureproforma.findByIdfacture", query = "SELECT f FROM Factureproforma f WHERE f.factureproformaPK.idfacture = :idfacture"),
-    @NamedQuery(name = "Factureproforma.findByNofacturepro", query = "SELECT f FROM Factureproforma f WHERE f.factureproformaPK.nofacturepro = :nofacturepro"),
+    @NamedQuery(name = "Factureproforma.findByIdfacture", query = "SELECT f FROM Factureproforma f WHERE f.idfacture = :idfacture"),
     @NamedQuery(name = "Factureproforma.findByIdcotation", query = "SELECT f FROM Factureproforma f WHERE f.idcotation = :idcotation"),
-    @NamedQuery(name = "Factureproforma.findByClinumcli", query = "SELECT f FROM Factureproforma f WHERE f.clinumcli = :clinumcli"),
     @NamedQuery(name = "Factureproforma.findByEnregistrement", query = "SELECT f FROM Factureproforma f WHERE f.enregistrement = :enregistrement"),
     @NamedQuery(name = "Factureproforma.findByMontant", query = "SELECT f FROM Factureproforma f WHERE f.montant = :montant"),
     @NamedQuery(name = "Factureproforma.findByDocumentNonJuridique", query = "SELECT f FROM Factureproforma f WHERE f.documentNonJuridique = :documentNonJuridique")})
 public class Factureproforma implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected FactureproformaPK factureproformaPK;
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "idfacture")
+    private Integer idfacture;
     @Basic(optional = false)
     @NotNull
     @Column(name = "idcotation")
     private int idcotation;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "Cli_numcli")
-    private int clinumcli;
     @Column(name = "enregistrement")
     private Short enregistrement;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -59,41 +56,37 @@ public class Factureproforma implements Serializable {
     @JoinColumn(name = "numcli", referencedColumnName = "numcli")
     @ManyToOne(optional = false)
     private Client numcli;
+    @JoinColumn(name = "Cli_numcli", referencedColumnName = "numcli")
+    @ManyToOne(optional = false)
+    private Client clinumcli;
     @JoinColumn(name = "Cot_idcotation", referencedColumnName = "idcotation")
     @ManyToOne(optional = false)
     private Cotation cotidcotation;
     @JoinColumn(name = "idfacture", referencedColumnName = "idfacture", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @OneToOne(optional = false)
     private Facture facture;
-    @JoinColumns({
-        @JoinColumn(name = "Fac_idfacture", referencedColumnName = "idfacture"),
-        @JoinColumn(name = "nofacturedef", referencedColumnName = "nofacturedef")})
+    @JoinColumn(name = "Fac_idfacture", referencedColumnName = "idfacture")
     @ManyToOne(optional = false)
-    private Facturedefinitive facturedefinitive;
+    private Facturedefinitive facidfacture;
 
     public Factureproforma() {
     }
 
-    public Factureproforma(FactureproformaPK factureproformaPK) {
-        this.factureproformaPK = factureproformaPK;
+    public Factureproforma(Integer idfacture) {
+        this.idfacture = idfacture;
     }
 
-    public Factureproforma(FactureproformaPK factureproformaPK, int idcotation, int clinumcli) {
-        this.factureproformaPK = factureproformaPK;
+    public Factureproforma(Integer idfacture, int idcotation) {
+        this.idfacture = idfacture;
         this.idcotation = idcotation;
-        this.clinumcli = clinumcli;
     }
 
-    public Factureproforma(int idfacture, int nofacturepro) {
-        this.factureproformaPK = new FactureproformaPK(idfacture, nofacturepro);
+    public Integer getIdfacture() {
+        return idfacture;
     }
 
-    public FactureproformaPK getFactureproformaPK() {
-        return factureproformaPK;
-    }
-
-    public void setFactureproformaPK(FactureproformaPK factureproformaPK) {
-        this.factureproformaPK = factureproformaPK;
+    public void setIdfacture(Integer idfacture) {
+        this.idfacture = idfacture;
     }
 
     public int getIdcotation() {
@@ -102,14 +95,6 @@ public class Factureproforma implements Serializable {
 
     public void setIdcotation(int idcotation) {
         this.idcotation = idcotation;
-    }
-
-    public int getClinumcli() {
-        return clinumcli;
-    }
-
-    public void setClinumcli(int clinumcli) {
-        this.clinumcli = clinumcli;
     }
 
     public Short getEnregistrement() {
@@ -144,6 +129,14 @@ public class Factureproforma implements Serializable {
         this.numcli = numcli;
     }
 
+    public Client getClinumcli() {
+        return clinumcli;
+    }
+
+    public void setClinumcli(Client clinumcli) {
+        this.clinumcli = clinumcli;
+    }
+
     public Cotation getCotidcotation() {
         return cotidcotation;
     }
@@ -160,18 +153,18 @@ public class Factureproforma implements Serializable {
         this.facture = facture;
     }
 
-    public Facturedefinitive getFacturedefinitive() {
-        return facturedefinitive;
+    public Facturedefinitive getFacidfacture() {
+        return facidfacture;
     }
 
-    public void setFacturedefinitive(Facturedefinitive facturedefinitive) {
-        this.facturedefinitive = facturedefinitive;
+    public void setFacidfacture(Facturedefinitive facidfacture) {
+        this.facidfacture = facidfacture;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (factureproformaPK != null ? factureproformaPK.hashCode() : 0);
+        hash += (idfacture != null ? idfacture.hashCode() : 0);
         return hash;
     }
 
@@ -182,7 +175,7 @@ public class Factureproforma implements Serializable {
             return false;
         }
         Factureproforma other = (Factureproforma) object;
-        if ((this.factureproformaPK == null && other.factureproformaPK != null) || (this.factureproformaPK != null && !this.factureproformaPK.equals(other.factureproformaPK))) {
+        if ((this.idfacture == null && other.idfacture != null) || (this.idfacture != null && !this.idfacture.equals(other.idfacture))) {
             return false;
         }
         return true;
@@ -190,7 +183,7 @@ public class Factureproforma implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mycompany.monprojetfacture.entity.Factureproforma[ factureproformaPK=" + factureproformaPK + " ]";
+        return "com.mycompany.monprojetfacture.entity.Factureproforma[ idfacture=" + idfacture + " ]";
     }
     
 }

@@ -7,13 +7,14 @@ package com.mycompany.monprojetfacture.entity;
 import jakarta.persistence.Basic;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
-import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -31,85 +32,60 @@ import java.util.Collection;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Facturedefinitive.findAll", query = "SELECT f FROM Facturedefinitive f"),
-    @NamedQuery(name = "Facturedefinitive.findByIdfacture", query = "SELECT f FROM Facturedefinitive f WHERE f.facturedefinitivePK.idfacture = :idfacture"),
-    @NamedQuery(name = "Facturedefinitive.findByNofacturedef", query = "SELECT f FROM Facturedefinitive f WHERE f.facturedefinitivePK.nofacturedef = :nofacturedef"),
-    @NamedQuery(name = "Facturedefinitive.findByClinumcli", query = "SELECT f FROM Facturedefinitive f WHERE f.clinumcli = :clinumcli"),
-    @NamedQuery(name = "Facturedefinitive.findByClinumcli2", query = "SELECT f FROM Facturedefinitive f WHERE f.clinumcli2 = :clinumcli2"),
+    @NamedQuery(name = "Facturedefinitive.findByIdfacture", query = "SELECT f FROM Facturedefinitive f WHERE f.idfacture = :idfacture"),
     @NamedQuery(name = "Facturedefinitive.findByEtatFacture", query = "SELECT f FROM Facturedefinitive f WHERE f.etatFacture = :etatFacture"),
     @NamedQuery(name = "Facturedefinitive.findByDocumentJuridique", query = "SELECT f FROM Facturedefinitive f WHERE f.documentJuridique = :documentJuridique")})
 public class Facturedefinitive implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected FacturedefinitivePK facturedefinitivePK;
+    @Id
     @Basic(optional = false)
     @NotNull
-    @Column(name = "Cli_numcli")
-    private int clinumcli;
-    @Column(name = "Cli_numcli2")
-    private Integer clinumcli2;
+    @Column(name = "idfacture")
+    private Integer idfacture;
     @Size(max = 254)
     @Column(name = "etatFacture")
     private String etatFacture;
     @Size(max = 254)
     @Column(name = "documentJuridique")
     private String documentJuridique;
-    @OneToMany(mappedBy = "facturedefinitive")
+    @OneToMany(mappedBy = "idfacture")
     private Collection<Paiement> paiementCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "facturedefinitive")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idfacture")
     private Collection<Formation> formationCollection;
+    @JoinColumn(name = "Cli_numcli", referencedColumnName = "numcli")
+    @ManyToOne(optional = false)
+    private Client clinumcli;
+    @JoinColumn(name = "Cli_numcli2", referencedColumnName = "numcli")
+    @ManyToOne
+    private Client clinumcli2;
     @JoinColumn(name = "numcli", referencedColumnName = "numcli")
     @ManyToOne(optional = false)
     private Client numcli;
     @JoinColumn(name = "idfacture", referencedColumnName = "idfacture", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @OneToOne(optional = false)
     private Facture facture;
     @JoinColumn(name = "idpaiement", referencedColumnName = "idpaiement")
     @ManyToOne(optional = false)
     private Paiement idpaiement;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "facturedefinitive")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "facidfacture")
     private Collection<Factureproforma> factureproformaCollection;
-    @OneToMany(mappedBy = "facturedefinitive")
+    @OneToMany(mappedBy = "idfacture")
     private Collection<Client> clientCollection;
 
     public Facturedefinitive() {
     }
 
-    public Facturedefinitive(FacturedefinitivePK facturedefinitivePK) {
-        this.facturedefinitivePK = facturedefinitivePK;
+    public Facturedefinitive(Integer idfacture) {
+        this.idfacture = idfacture;
     }
 
-    public Facturedefinitive(FacturedefinitivePK facturedefinitivePK, int clinumcli) {
-        this.facturedefinitivePK = facturedefinitivePK;
-        this.clinumcli = clinumcli;
+    public Integer getIdfacture() {
+        return idfacture;
     }
 
-    public Facturedefinitive(int idfacture, int nofacturedef) {
-        this.facturedefinitivePK = new FacturedefinitivePK(idfacture, nofacturedef);
-    }
-
-    public FacturedefinitivePK getFacturedefinitivePK() {
-        return facturedefinitivePK;
-    }
-
-    public void setFacturedefinitivePK(FacturedefinitivePK facturedefinitivePK) {
-        this.facturedefinitivePK = facturedefinitivePK;
-    }
-
-    public int getClinumcli() {
-        return clinumcli;
-    }
-
-    public void setClinumcli(int clinumcli) {
-        this.clinumcli = clinumcli;
-    }
-
-    public Integer getClinumcli2() {
-        return clinumcli2;
-    }
-
-    public void setClinumcli2(Integer clinumcli2) {
-        this.clinumcli2 = clinumcli2;
+    public void setIdfacture(Integer idfacture) {
+        this.idfacture = idfacture;
     }
 
     public String getEtatFacture() {
@@ -144,6 +120,22 @@ public class Facturedefinitive implements Serializable {
 
     public void setFormationCollection(Collection<Formation> formationCollection) {
         this.formationCollection = formationCollection;
+    }
+
+    public Client getClinumcli() {
+        return clinumcli;
+    }
+
+    public void setClinumcli(Client clinumcli) {
+        this.clinumcli = clinumcli;
+    }
+
+    public Client getClinumcli2() {
+        return clinumcli2;
+    }
+
+    public void setClinumcli2(Client clinumcli2) {
+        this.clinumcli2 = clinumcli2;
     }
 
     public Client getNumcli() {
@@ -191,7 +183,7 @@ public class Facturedefinitive implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (facturedefinitivePK != null ? facturedefinitivePK.hashCode() : 0);
+        hash += (idfacture != null ? idfacture.hashCode() : 0);
         return hash;
     }
 
@@ -202,7 +194,7 @@ public class Facturedefinitive implements Serializable {
             return false;
         }
         Facturedefinitive other = (Facturedefinitive) object;
-        if ((this.facturedefinitivePK == null && other.facturedefinitivePK != null) || (this.facturedefinitivePK != null && !this.facturedefinitivePK.equals(other.facturedefinitivePK))) {
+        if ((this.idfacture == null && other.idfacture != null) || (this.idfacture != null && !this.idfacture.equals(other.idfacture))) {
             return false;
         }
         return true;
@@ -210,7 +202,7 @@ public class Facturedefinitive implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mycompany.monprojetfacture.entity.Facturedefinitive[ facturedefinitivePK=" + facturedefinitivePK + " ]";
+        return "com.mycompany.monprojetfacture.entity.Facturedefinitive[ idfacture=" + idfacture + " ]";
     }
     
 }

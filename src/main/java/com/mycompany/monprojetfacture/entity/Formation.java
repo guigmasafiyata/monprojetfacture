@@ -9,7 +9,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinColumns;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
@@ -47,11 +46,9 @@ public class Formation implements Serializable {
     private Long prixHt;
     @Column(name = "duree")
     private Character duree;
-    @JoinColumns({
-        @JoinColumn(name = "idfacture", referencedColumnName = "idfacture"),
-        @JoinColumn(name = "nofacturedef", referencedColumnName = "nofacturedef")})
+    @JoinColumn(name = "idfacture", referencedColumnName = "idfacture")
     @ManyToOne(optional = false)
-    private Facturedefinitive facturedefinitive;
+    private Facturedefinitive idfacture;
     @JoinColumn(name = "idretenue", referencedColumnName = "idretenue")
     @ManyToOne
     private Retenue idretenue;
@@ -95,12 +92,12 @@ public class Formation implements Serializable {
         this.duree = duree;
     }
 
-    public Facturedefinitive getFacturedefinitive() {
-        return facturedefinitive;
+    public Facturedefinitive getIdfacture() {
+        return idfacture;
     }
 
-    public void setFacturedefinitive(Facturedefinitive facturedefinitive) {
-        this.facturedefinitive = facturedefinitive;
+    public void setIdfacture(Facturedefinitive idfacture) {
+        this.idfacture = idfacture;
     }
 
     public Retenue getIdretenue() {

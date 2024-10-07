@@ -42,8 +42,6 @@ public class Cotation implements Serializable {
     private Integer idcotation;
     @Column(name = "valeur")
     private Long valeur;
-    @OneToMany(mappedBy = "idcotation")
-    private Collection<Personne> personneCollection;
     @JoinColumn(name = "idpers", referencedColumnName = "idpers")
     @ManyToOne(optional = false)
     private Personne idpers;
@@ -71,15 +69,6 @@ public class Cotation implements Serializable {
 
     public void setValeur(Long valeur) {
         this.valeur = valeur;
-    }
-
-    @XmlTransient
-    public Collection<Personne> getPersonneCollection() {
-        return personneCollection;
-    }
-
-    public void setPersonneCollection(Collection<Personne> personneCollection) {
-        this.personneCollection = personneCollection;
     }
 
     public Personne getIdpers() {

@@ -9,8 +9,6 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
@@ -33,6 +31,7 @@ import java.util.Collection;
 @NamedQueries({
     @NamedQuery(name = "Personne.findAll", query = "SELECT p FROM Personne p"),
     @NamedQuery(name = "Personne.findByIdpers", query = "SELECT p FROM Personne p WHERE p.idpers = :idpers"),
+    @NamedQuery(name = "Personne.findByIdcotation", query = "SELECT p FROM Personne p WHERE p.idcotation = :idcotation"),
     @NamedQuery(name = "Personne.findByNom", query = "SELECT p FROM Personne p WHERE p.nom = :nom"),
     @NamedQuery(name = "Personne.findByAge", query = "SELECT p FROM Personne p WHERE p.age = :age")})
 public class Personne implements Serializable {
@@ -43,16 +42,13 @@ public class Personne implements Serializable {
     @NotNull
     @Column(name = "idpers")
     private Integer idpers;
+    @Column(name = "idcotation")
+    private Integer idcotation;
     @Size(max = 254)
     @Column(name = "nom")
     private String nom;
     @Column(name = "age")
     private Long age;
-    @JoinColumn(name = "idcotation", referencedColumnName = "idcotation")
-    @ManyToOne
-    private Cotation idcotation;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "personne")
-    private Physique physique;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idpers")
     private Collection<Cotation> cotationCollection;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "personne")
@@ -73,6 +69,14 @@ public class Personne implements Serializable {
         this.idpers = idpers;
     }
 
+    public Integer getIdcotation() {
+        return idcotation;
+    }
+
+    public void setIdcotation(Integer idcotation) {
+        this.idcotation = idcotation;
+    }
+
     public String getNom() {
         return nom;
     }
@@ -87,22 +91,6 @@ public class Personne implements Serializable {
 
     public void setAge(Long age) {
         this.age = age;
-    }
-
-    public Cotation getIdcotation() {
-        return idcotation;
-    }
-
-    public void setIdcotation(Cotation idcotation) {
-        this.idcotation = idcotation;
-    }
-
-    public Physique getPhysique() {
-        return physique;
-    }
-
-    public void setPhysique(Physique physique) {
-        this.physique = physique;
     }
 
     @XmlTransient
