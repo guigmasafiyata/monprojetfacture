@@ -12,7 +12,6 @@ import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 import java.util.List;
 
-
 /**
  *
  * @author GUIGMA Safiyata
@@ -34,6 +33,9 @@ public class ClientManager {
 
     }
 
+    /**
+     *@param client
+     */
     @Transactional
     public void persist(Client client) {
         em.persist(client);

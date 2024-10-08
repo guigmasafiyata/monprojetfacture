@@ -7,8 +7,92 @@
 
     <h:head>
         <title>Formulaire de connexion</title>
-           
+        <link rel='stylesheet' type='text/css' href='mapage.css'/>
     </h:head>
+    <style>
+        
+        
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0px;
+}
+/* Style de la carte de connexion,presente le formulaire sous forme de cadre*/
+        .card {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            text-align: center;
+           
+        }
+        
+        .card h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        /* Styles des champs de saisie */
+        .mb-3 {
+            width: 100%;
+        }
+        
+        .mb-3 label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .mb-3 input[type="text"],
+        .mb-3 input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        .mb-3 input[type="text"]:focus,
+        .mb-3 input[type="password"]:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.5);
+        }
+        
+        /* Styles du bouton */
+        .mb-3 .ui-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+          } 
+          
+          .mb-3 .ui-button:hover {
+              background-color: #0056b3;
+          }
+          
+          /* Styles pour les messages d'erreur */
+          .ui-message-error {
+              color: #d9534f;
+              font-size: 0.9em;
+              margin-top: -10px;
+              margin-bottom: 10px;
+          }
+
+          .ui-message-error .ui-message-error-icon {
+              display: none;
+          }
+          
+
+    </style>
     <h:body>
 
         <f:view>
@@ -18,13 +102,13 @@
                 <h:form id="form">
                     <h:panelGrid columns="2" cellpadding="7" styleClass="mb-3">
                         <p:growl id="growl" showDetail="true"/><br/>
-                        
+
                         <p:outputLabel for="utilisateur" value="Utilisateur:"/>
                         <p:inputText id="utilisateur" required="true" 
                                      requiredMessage="La saisie de l'utilisateur est obligatoire !" />
                         <p:message for="utilisateur" display="tooltip" />
                         <br/><br/>
-                        
+
                         <p:outputLabel for="login" value="Login:"/>
                         <p:inputText  id="login" required="true"
                                       requiredMessage="La saisie du login est obligatoire !" 
@@ -45,7 +129,7 @@
                         <br/><br/>
 
 
-                        <p:commandButton ajax="false" update="@form, growl" action="#{loginBean.returnAction}" value="boutton"  />
+                        <p:commandButton ajax="false" update="@form, growl" action="#{loginBean.returnAction}" value="connect"  />
                     </h:panelGrid>
 
                 </h:form>
