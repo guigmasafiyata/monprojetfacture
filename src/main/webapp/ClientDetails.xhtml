@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+
+   <f:metadata>
+        <f:viewParam name="numcli" value="#{clientDetailsBean.numcli}" required="true"/>
+        <f:viewAction action="#{clientDetailsBean.loadClient}"/>
+    </f:metadata>
+
+    <h:head>
+        <title>Détails clients</title>
+    </h:head>
+    
+    <h:body>
+        <f:view>
+            <h:form>
+                <h1><h:outputText value="Créer/Éditer"/></h1>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="Numcli:" for="numcli" />
+                    <h:inputText id="numcli" value="#{clientDetailsBean.client.numcli}" title="Numcli" required="true" requiredMessage="Le champ Numcli est requis."/>
+                    
+                    <h:outputLabel value="Nom:" for="nom" />
+                    <h:inputText id="nom" value="#{clientDetailsBean.client.nom}" title="Nom" />
+                    
+                    <h:outputLabel value="Prenom:" for="prenom" />
+                    <h:inputText id="prenom" value="#{clientDetailsBean.client.prenom}" title="Prenom" />
+                    
+                    <h:outputLabel value="Email:" for="email" />
+                    <h:inputText id="email" value="#{clientDetailsBean.client.email}" title="Email" />
+                    
+                    <h:outputLabel value="Idfacture:" for="idfacture" />
+                    <h:selectOneMenu id="idfacture" value="#{clientDetailsBean.client.idfacture}" title="Idfacture" >
+                        <!-- TODO: update below reference to list of available items-->
+                        <f:selectItems value="#{ClientDetailsBean.clientList}"
+                                       var="client"
+                                       itemLabel="#{client.code} (#{client.rate} %)"
+                                       itemValue="#{client.idfacture}"/>
+                    </h:selectOneMenu>
+                    
+                    <h:button id="back" value="Revenir à la liste" outcome="Listedesclients"/>
+                    <h:commandButton id="update" value="Enregistrer" action="#{clientDetailsBean.update()}"/>
+                </h:panelGrid>
+            </h:form>
+        </f:view>
+    </h:body>
+</html>

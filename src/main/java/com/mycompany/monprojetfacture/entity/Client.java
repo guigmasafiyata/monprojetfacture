@@ -200,4 +200,6 @@ public class Client implements Serializable {
         return "com.mycompany.monprojetfacture.entity.Client[ numcli=" + numcli + " ]";
     }
 
+   
+
 }

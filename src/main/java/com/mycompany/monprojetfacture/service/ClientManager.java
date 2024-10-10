@@ -9,6 +9,7 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import java.util.List;
 
@@ -44,5 +45,19 @@ public class ClientManager {
     public Client findById(int numcli) {
         return em.find(Client.class, numcli);
     }
+    @Transactional
+    public void delete(Client client) {
+        if(client != null ){
+            em.remove(em.merge(client));
+        }
+        
+    }
+     @Transactional
+    public boolean isEmailExists(String email) {
+       TypedQuery<Long> query = em.createQuery("SELECT COUNT(c) FROM Client c WHERE c.email = :email", Long.class);
+        query.setParameter("email", email);
+        return query.getSingleResult() > 0; // Renvoie true si l'e-mail existe
+    
 
 }
+    }

@@ -45,7 +45,7 @@ public class LoginBean implements Serializable {
 //                    new FacesMessage("Connexion réussie!"));
 //            // Redirige vers la page suivante
 //        }
-        return "pagesuivante"; 
+        return "Listedesclients"; 
     }
 
 }
