@@ -17,6 +17,13 @@
             <property name="eclipselink.logging.level" value="FINE"/>
         </properties>
     </persistence-unit>
+    <persistence-unit name="facturePU">
+        <jta-data-source>jdbc/facture</jta-data-source>
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+        <properties>
+            <property name="eclipselink.logging.level" value="FINE"/>
+        </properties>
+    </persistence-unit>
 </persistence>
 
       

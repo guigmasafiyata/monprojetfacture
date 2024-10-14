@@ -9,6 +9,114 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
         <title>liste des clients</title>
     </h:head>
+   
+    <style>
+        /* Style global pour le body */
+body {
+   font-family: Arial, sans-serif;
+   background-color: #f5f5f5;
+   color: #333;
+}
+
+/* Style du conteneur de la table */
+.ui-datatable {
+   background-color: #ffffff;
+   border: 1px solid #e0e0e0;
+   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+   border-radius: 5px;
+   margin: 20px;
+}
+
+/* En-tête de la table */
+.ui-datatable th {
+   background-color: #4CAF50;
+   color: #ffffff;
+   font-weight: bold;
+   padding: 10px;
+   text-align: center;
+}
+
+/* Corps de la table */
+.ui-datatable td {
+   padding: 10px;
+   text-align: center;
+   border-bottom: 1px solid #e0e0e0;
+}
+
+/* Style des liens */
+h\\:link, .ui-button {
+   text-decoration: none;
+   color: #4CAF50;
+}
+
+h\\:link:hover, .ui-button:hover {
+   color: #388E3C;
+}
+
+/* Icônes */
+.pi-pencil {
+    font-size: 1.2em;
+    color: #555;
+    cursor: pointer;
+    margin-right: 50px; /* Espace entre l'icône de modification et celle de suppression */
+}
+
+.pi-pencil:hover {
+    color: #2196F3;
+}
+
+.pi-trash {
+    font-size: 1.2em;
+    color: #555;
+    cursor: pointer;
+}
+
+.pi-trash:hover {
+    color: #F44336;
+}
+
+
+/* Input de recherche */
+.ui-inputtext {
+   padding: 5px;
+   border-radius: 4px;
+   border: 1px solid #ddd;
+}
+
+.ui-inputtext:focus {
+   border-color: #4CAF50;
+}
+
+/* Pagination */
+.ui-paginator .ui-paginator-current, .ui-paginator-page, .ui-paginator-first, .ui-paginator-last {
+   color: #333;
+   padding: 5px;
+}
+
+.ui-paginator .ui-state-active {
+   background-color: #4CAF50;
+   color: #ffffff;
+}
+
+/* Boutons de commande */
+.ui-button {
+   background-color: #4CAF50;
+   color: #ffffff;
+   border: none;
+   padding: 5px 10px;
+   border-radius: 4px;
+}
+
+.ui-button:hover {
+   background-color: #388E3C;
+}
+
+/* Effet de survol */
+.ui-datatable tr:hover {
+   background-color: #f1f1f1;
+}
+
+    </style>
     <h:body>
         <p:messages showDetail="true"/>
         <h:form>
@@ -83,9 +191,6 @@
                                       update="@form"
                                       onclick="return confirm('Vouklez vous vraiment supprimer ce client')"
                                       icon="pi pi-trash"/>
-                    
-                   
-                    
                 </p:column>
             </p:dataTable>
         </h:form>

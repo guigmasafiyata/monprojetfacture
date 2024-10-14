@@ -1,18 +1,21 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="jakarta.faces.html"
-      xmlns:f="jakarta.faces.core"
-      xmlns:p="http://primefaces.org/ui">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
+
+
+<ui:composition template="template.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="jakarta.faces.html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="jakarta.faces.core"
+    xmlns:ui="jakarta.faces.facelets">
+    <ui:define name="content">
+   
     <style>
 
 
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f2f5;
+            background-image: url('./image/horizon-champ-vert-ciel_87394-5617.jpg');
             display: flex;
             justify-content: center;
             align-items: center;
@@ -94,8 +97,6 @@
         }
 
     </style>
-    <h:body>
-        <f:view>
             <div class="card">
                 <h1>Ajout de Client</h1>
                 <p:growl id="growl" showDetail="true"/>
@@ -121,12 +122,9 @@
                             <f:validateRegex pattern="^[\w.+-]+@[\w.+-]+\.[a-z]{2,}$" />
                         </p:inputText>
                         <p:message for="email" display="tooltip" />
-            
                         <p:commandButton ajax="false" update="@form, growl" action="#{clientBean.addClient}" value="Ajouter Client" />
                     </h:panelGrid>
                 </h:form>
             </div>
-
-        </f:view>
-    </h:body>
-</html>
+</ui:define>
+</ui:composition>

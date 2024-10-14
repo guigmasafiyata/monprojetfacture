@@ -13,6 +13,7 @@ import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,6 +24,7 @@ import java.util.List;
 @ViewScoped
 public class ClientBean implements Serializable {
     private List<Client> clientList;
+   
     private Client client = new Client();
     private String nom;
     private String prenom;
@@ -31,6 +33,9 @@ public class ClientBean implements Serializable {
     
     @Inject
     private ClientManager clientManager;
+    
+
+  
 
     public List<Client> getClientList() {
         clientList = clientManager.getAllClients();
@@ -112,6 +117,19 @@ public class ClientBean implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Client supprimé avec succès."));
     }
     }
+    
+    public List<Integer> getidfacture() {
+    List<Integer> idfacture = new ArrayList<>();
+    
+    // Vérifie si la liste des clients est initialisée et la récupère si nécessaire
+    if (clientList == null) {
+        clientList = clientManager.getAllClients();
+    }
+    
+    
+    
+    return idfacture;
+}
 
 
 }

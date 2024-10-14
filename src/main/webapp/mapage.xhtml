@@ -12,17 +12,22 @@
         
         
         body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0px;
-}
+            font-family: Arial, sans-serif;
+            background-image: url('./image/balles-foin-champ-contre-ciel_1048944-6091168.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
 /* Style de la carte de connexion,presente le formulaire sous forme de cadre*/
         .card {
-            background-color: #ffffff;
+            background-color: #4dc9ef;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
@@ -66,7 +71,7 @@
         
         /* Styles du bouton */
         .mb-3 .ui-button {
-            background-color: #007bff;
+            background-color: #4a5156;
             color: white;
             border: none;
             border-radius: 10px;
@@ -112,7 +117,8 @@
                         <p:inputText  id="login" required="true"
                                       requiredMessage="La saisie du login est obligatoire !" 
                                       validatorMessage="Le login doit correspondre à un email">
-                            <f:validateRegex pattern="^[\w.+-]+@[\w.+-]+\.[a-z]{2,}$" />
+                           <f:validateRegex pattern="^[\w.+-]+@[\w.+-]+\.[a-z]{2,}$" />
+
                         </p:inputText>
                         <p:message for="login" display="tooltip" />
                         <br/>

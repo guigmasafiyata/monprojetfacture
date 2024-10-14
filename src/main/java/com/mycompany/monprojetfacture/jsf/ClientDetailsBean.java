@@ -5,7 +5,9 @@
 package com.mycompany.monprojetfacture.jsf;
 
 import com.mycompany.monprojetfacture.entity.Client;
+import com.mycompany.monprojetfacture.entity.Facture;
 import com.mycompany.monprojetfacture.service.ClientManager;
+import com.mycompany.monprojetfacture.service.FactureManager;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
@@ -13,6 +15,8 @@ import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Backing bean pour la page clientrDetails.xhtml.
@@ -20,12 +24,21 @@ import java.io.Serializable;
 @Named(value = "clientDetailsBean")
 @ViewScoped
 public class ClientDetailsBean implements Serializable{
-    
+   
+   
     private int numcli;
     private Client client;
+    private List<Facture> factureList;
+    private Integer selectedFactureId;
+    
+    
+    
 
     @Inject
     private ClientManager clientManager;
+    private FactureManager factureManager;
+
+  
 
     public int getNumcli() {
         return numcli;
@@ -57,7 +70,22 @@ public class ClientDetailsBean implements Serializable{
     public void setClientManager(ClientManager clientManager) {
         this.clientManager = clientManager;
     }
+    
+     public List<Facture> getFactureList() {
+        return factureList = factureManager.getAllFactures();
+    }
 
+    public void setFactureList(List<Facture> factureList) {
+        this.factureList = factureList;
+    }
+
+      public FactureManager getFactureManager() {
+        return factureManager;
+    }
+
+    public void setFactureManager(FactureManager factureManager) {
+        this.factureManager = factureManager;
+    }
    
 
    public String update() {
@@ -68,6 +96,17 @@ public class ClientDetailsBean implements Serializable{
     public void loadClient() {
         this.client = clientManager.findById(numcli);
     }
+
+    public Integer getSelectedFactureId() {
+        return selectedFactureId;
+    }
+
+    public void setSelectedFactureId(Integer selectedFactureId) {
+        this.selectedFactureId = selectedFactureId;
+    }
+    
+    
+    
     
      // Méthode pour supprimer un client
     public String deleteClient(Client client) {

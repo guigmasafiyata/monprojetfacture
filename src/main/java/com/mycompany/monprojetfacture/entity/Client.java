@@ -200,6 +200,10 @@ public class Client implements Serializable {
         return "com.mycompany.monprojetfacture.entity.Client[ numcli=" + numcli + " ]";
     }
 
+    public Integer getId() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
    
 
 }
