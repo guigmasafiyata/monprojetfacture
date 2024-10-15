@@ -38,14 +38,7 @@ public class LoginBean implements Serializable {
     }
 
     public String returnAction() {
-//        // Logique pour vérifier les identifiants, par exemple
-//        if (login.equals("safi@gmail.fr") && password.equals("002")) {
-//            // Authentification réussie
-//            FacesContext.getCurrentInstance().addMessage(null,
-//                    new FacesMessage("Connexion réussie!"));
-//            // Redirige vers la page suivante
-//        }
-        return "Listedesclients"; 
-    }
 
+        return "Listedesclients?faces-redirect=true"; // Redirection vers la liste des clients
+    }
 }

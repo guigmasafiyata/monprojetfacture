@@ -36,6 +36,7 @@ public class ClientDetailsBean implements Serializable{
 
     @Inject
     private ClientManager clientManager;
+    @Inject
     private FactureManager factureManager;
 
   
@@ -49,7 +50,10 @@ public class ClientDetailsBean implements Serializable{
         if (clientManager == null) {
             throw new IllegalStateException("Injection de ClientManager a échoué !");
         }
+        
     }
+    
+    
 
     public void setNumcli(int numcli) {
         this.numcli = numcli;
@@ -83,9 +87,7 @@ public class ClientDetailsBean implements Serializable{
         return factureManager;
     }
 
-    public void setFactureManager(FactureManager factureManager) {
-        this.factureManager = factureManager;
-    }
+ 
    
 
    public String update() {
