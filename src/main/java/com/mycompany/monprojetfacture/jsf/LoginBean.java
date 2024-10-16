@@ -16,8 +16,8 @@ public class LoginBean implements Serializable {
 
     private static final long serialVersionUID = 1L; // Ajout d'un identifiant de version pour la sérialisation
 
-    private String login = "safi";
-    private String password = "002";
+    private String login = "";
+    private String password = "";
 
     public String getLogin() {
         return login;

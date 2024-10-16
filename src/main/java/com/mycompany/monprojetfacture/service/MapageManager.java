@@ -23,7 +23,7 @@ public class MapageManager {
     private EntityManager em;
 
     public List<Connexion> getAllMapages() {
-        Query query = em.createNamedQuery("Mapage.findAll");
+        Query query = em.createNamedQuery("Connexion.findAll");
         return query.getResultList();
 
     }

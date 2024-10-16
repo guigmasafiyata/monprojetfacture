@@ -9,143 +9,146 @@
         <title>Formulaire de connexion</title>
         <style>
             body {
-                font-family: 'Arial', sans-serif;
-                background-color: #f0f2f5;
-                margin: 0;
-                padding: 0;
+                font-family: Arial, sans-serif;
+                background-color: #f0f0f0;
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 height: 100vh;
+                margin: 0;
             }
 
-            .login-container {
-                background-color: #ffffff;
+            .card {
+                background-color: white;
+                padding: 2rem;
                 border-radius: 8px;
-                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-                padding: 40px;
-                width: 300px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                width: 400px; /* Augmenté pour plus d'espace */
+                box-sizing: border-box;
             }
 
-            .login-form h2 {
-                text-align: center;
+            h1 {
                 color: #333;
-                margin-bottom: 24px;
+                text-align: center;
+                margin-bottom: 1.5rem;
             }
 
-            .form-group {
-                margin-bottom: 20px;
+            /* Centrer le contenu du formulaire */
+            #form {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
             }
 
-            .form-group label {
+            .ui-panelgrid {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            /* Styles pour les champs de saisie */
+            .ui-float-label {
                 display: block;
-                margin-bottom: 8px;
-                color: #555;
+                position: relative;
+                margin-bottom: 1rem;
+                width: 80%; /* Ajusté pour centrer dans le cadre */
             }
 
-            .form-group input {
+            .ui-inputtext, .ui-password {
                 width: 100%;
-                padding: 10px;
-                border: 1px solid #ddd;
+                padding: 0.5rem;
+                border: 1px solid #ccc;
                 border-radius: 4px;
-                font-size: 14px;
+                font-size: 1rem;
+                box-sizing: border-box;
             }
 
-            .form-group input:focus {
-                outline: none;
-                border-color: #4a90e2;
-                box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+            .ui-float-label label {
+                position: absolute;
+                top: 0.5rem;
+                left: 0.5rem;
+                transition: all 0.2s;
+                pointer-events: none;
+                color: #666;
             }
 
-            .btn-login {
-                width: 100%;
-                padding: 12px;
+            .ui-inputtext:focus + label,
+            .ui-password:focus + label,
+            .ui-inputtext:not(:placeholder-shown) + label,
+            .ui-password:not(:placeholder-shown) + label {
+                top: -0.5rem;
+                left: 0.25rem;
+                font-size: 0.75rem;
+                color: #4a90e2;
+                background-color: white;
+                padding: 0 0.25rem;
+            }
+
+            /* Style pour le bouton de connexion */
+            .ui-button {
+                width: 50%; /* Ajusté pour correspondre aux champs de saisie */
+                padding: 0.5rem;
                 background-color: #4a90e2;
                 color: white;
                 border: none;
                 border-radius: 4px;
-                font-size: 16px;
+                font-size: 1rem;
                 cursor: pointer;
-                transition: background-color 0.3s ease;
+                transition: background-color 0.2s;
+                margin-top: 1rem;
             }
 
-            .btn-login:hover {
-                background-color: #357abd;
+            .ui-button:hover {
+                background-color: #3a7bc8;
             }
 
-            .forgot-password {
+            /* Style pour les messages d'erreur */
+            .ui-message {
+                color: #d32f2f;
+                font-size: 0.75rem;
+                margin-top: 0.25rem;
                 text-align: center;
-                margin-top: 16px;
-            }
-
-            .forgot-password a {
-                color: #4a90e2;
-                text-decoration: none;
-                font-size: 14px;
-            }
-
-            .forgot-password a:hover {
-                text-decoration: underline;
+                width: 80%; /* Ajusté pour correspondre aux champs de saisie */
             }
         </style>
     </h:head>
-
     <h:body>
+
         <f:view>
             <div class="card">
-                <h1>Connexion</h1>
+                <h1> Connexion</h1>
 
                 <h:form id="form">
                     <h:panelGrid columns="2" cellpadding="7" styleClass="mb-3">
                         <p:growl id="growl" showDetail="true"/><br/>
 
-                        <!-- Utilisateur avec étiquette flottante -->
-                        <span class="ui-float-label">
-                            <p:inputText id="utilisateur" value="#{loginBean.login}" required="true" 
-                                         placeholder="Utilisateur" 
-                                         requiredMessage="La saisie de l'utilisateur est obligatoire !" />
-                        </span>
-                        <p:message for="utilisateur" display="tooltip" />
+                        <p:outputLabel for="login" value="Login:"/>
+                        <p:inputText  id="login" required="true"
+                                      requiredMessage="La saisie du login est obligatoire !" 
+                                      validatorMessage="Le login doit correspondre à un email">
+                           <f:validateRegex pattern="^[\w.+-]+@[\w.+-]+\.[a-z]{2,}$" />
 
-                        <br/><br/>
-
-                        <!-- Login avec étiquette flottante -->
-                        <span class="ui-float-label">
-                            <p:inputText id="login" value="#{loginBean.login}" required="true"
-                                         placeholder="Login"
-                                         requiredMessage="La saisie du login est obligatoire !" 
-                                         validatorMessage="Le login doit correspondre à un email">
-                                <!--<f:validateRegex pattern="^[\\w.+%-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$" />-->
-
-                            </p:inputText>
-                        </span>
+                        </p:inputText>
                         <p:message for="login" display="tooltip" />
+                        <br/>
 
-                        <br/><br/>
+                        <p:outputLabel for="password" value="Password:"/>
+                        <p:password id="password" required="true" 
+                                    requiredMessage="La saisie du mot de passe est obligatoire !"
+                                    validatorMessage="Votre mot de passe doit contenir entre 3 à 8 caractères" >
+                            <f:validateLength minimum="3" maximum="8" />
+                        </p:password> 
 
-                        <!-- Password avec étiquette flottante -->
-                        <span class="ui-float-label">
-                            <p:password id="password" value="#{loginBean.password}" required="true" 
-                                        placeholder="Password"
-                                        requiredMessage="La saisie du mot de passe est obligatoire !" 
-                                        validatorMessage="Votre mot de passe doit contenir entre 3 à 8 caractères">
-                                <f:validateLength minimum="3" maximum="8" />
-                            </p:password>
-                        </span>
                         <p:message for="password" display="tooltip" />
-
                         <br/><br/>
 
-                        <!-- Bouton de connexion -->
-                        <p:commandButton  ajax="false" update="@form, growl" value="Connect" action="#{loginBean.returnAction}" />
 
-
+                        <p:commandButton ajax="false" update="@form, growl" action="#{loginBean.returnAction}" value="connect"  />
                     </h:panelGrid>
+
                 </h:form>
             </div>
         </f:view>
     </h:body>
-
-
-
 </html>
